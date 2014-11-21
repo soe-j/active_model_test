@@ -3,19 +3,27 @@ Bundler.require
 
 require './pokemon'
 
-# begin
-  pika = Pokemon.new(name: "ピカチュウ", type: "でんき")
+
+p "nameもtypeも入ってる================="
+pika = Pokemon.new(name: "ピカチュウ", type: "でんき")
+if pika.invalid?
+  p pika.errors.full_messages
+else
   puts "名前は#{pika.name}、#{pika.type}ポケモンじゃ"
+end
 
-  nazo = Pokemon.new()
-  puts "名前は#{nazo.name}、#{nazo.type}ポケモンじゃ"
+p "name入ってない================="
+noname = Pokemon.new(type: "みず")
+if noname.invalid?
+  p noname.errors.full_messages
+else
+  puts "名前は#{noname.name}、#{noname.type}ポケモンじゃ"
+end
 
-  notype = Pokemon.new(name: "みゅーつーてきなやつ")
+p "type入ってない================="
+notype = Pokemon.new(name: "みゅーつーてきなやつ")
+if notype.invalid?
+  p notype.errors.full_messages
+else
   puts "名前は#{notype.name}、#{notype.type}ポケモンじゃ"
-
-# rescue => ex
-#   puts ex.message
-# ensure
-
-
-# end
+end
