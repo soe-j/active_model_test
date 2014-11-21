@@ -37,3 +37,11 @@ if pikachu.invalid?
 else
   p pikachu.attack
 end
+
+p "typeが存在しないtype==========="
+doraemon = Pokemon.new(name: "ドラえもん", type: Type.new(name: "ネコ型ロボット"))
+if doraemon.invalid?
+  p doraemon.errors.full_messages
+else
+  p doraemon.attack
+end

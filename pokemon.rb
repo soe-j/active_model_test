@@ -1,16 +1,21 @@
 class Pokemon
   include ActiveModel::Model
   attr_accessor :name, :type
+
   validates_presence_of :name, :type
   validate do
-    unless self.type.class == Type
+    if self.type.class != Type
       errors.add(:type, "is not Type class")
+    elsif self.type.invalid?
+      errors.add(:type, "is おかしい Type")
     end
   end # これでtypeのpresenceが上書きされている感
 
-  # validates :name, presence: true
-
   def attack
-    "いけ!#{self.name}、#{self.type.get_skill}!!!"
+    if self.type.invalid?
+      p "だめやん"
+    else
+      "いけ!#{self.name}、#{self.type.get_skill}!!!"
+    end
   end
 end
