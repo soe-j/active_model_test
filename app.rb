@@ -3,6 +3,7 @@ Bundler.require
 
 require './pokemon'
 
+I18n.enforce_available_locales = false
 
 p "nameもtypeも入ってる================="
 pika = Pokemon.new(name: "ピカチュウ", type: "でんき")
