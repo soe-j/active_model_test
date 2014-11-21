@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem "activemodel"
+gem "activemodel", :require => "active_model"
