@@ -2,20 +2,27 @@ class Pokemon
   include ActiveModel::Model
   attr_accessor :name, :type
 
-  validates_presence_of :name, :type
+  # 検証の設定
+  validates_presence_of :name
   validate do
-    if self.type.class != Type
-      errors.add(:type, "is not Type class")
-    elsif self.type.invalid?
-      errors.add(:type, "is おかしい Type")
+    errors.add(:base, "Not Type class") unless @type.class == Type
+  end
+
+  # initializeされたら、その後に呼ぶ関数after_initailizeを宣言、定義
+  define_model_callbacks :initialize, only: :after
+  after_initialize :validate
+
+  def initialize(args)
+    run_callbacks(:initialize) { super }
+  end
+
+  def validate
+    if self.invalid?
+      raise "Pokemon format error"
     end
-  end # これでtypeのpresenceが上書きされている感
+  end
 
   def attack
-    if self.type.invalid?
-      p "だめやん"
-    else
-      "いけ!#{self.name}、#{self.type.get_skill}!!!"
-    end
+    puts "いけ!#{self.name}、#{self.type.get_skill}!!!"
   end
 end
