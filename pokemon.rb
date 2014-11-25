@@ -12,6 +12,7 @@ class Pokemon
   define_model_callbacks :initialize, only: :after
   after_initialize :validate
 
+  # callback発動するようオーバーライド
   def initialize(args)
     run_callbacks(:initialize) { super }
   end
