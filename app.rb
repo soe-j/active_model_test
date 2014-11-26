@@ -14,6 +14,10 @@ I18n.enforce_available_locales = false
   pipi.attack
   puts pipi.to_xml
 
+  p "characterつくっちゃう================"
+  chara = Character.new(species: "ポケモン", body: pipi)
+  puts chara.to_xml
+
 
   # p "nameもtype(クラスのnameがおかしい)も入ってる================"
   # pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ののの"))
