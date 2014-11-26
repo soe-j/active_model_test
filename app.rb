@@ -3,14 +3,17 @@ Bundler.require
 
 require './pokemon'
 require './type'
+require './character'
 
 I18n.enforce_available_locales = false
 
-begin
+# begin
   p "nameもtype(クラス)も入ってる================"
   pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ノーマル"))
   puts "名前は#{pipi.name}、#{pipi.type.name}ポケモンじゃ"
   pipi.attack
+  puts pipi.to_xml
+
 
   # p "nameもtype(クラスのnameがおかしい)も入ってる================"
   # pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ののの"))
@@ -25,13 +28,13 @@ begin
   # pika = Pokemon.new(name: "ピカチュウ", type: "でんき")
   # puts "名前は#{pika.name}、#{pika.type.name}ポケモンじゃ"
 
-  p "typeがない"
-  poka = Pokemon.new(name: "poka")
+  # p "typeがない"
+  # poka = Pokemon.new(name: "poka")
 
 
-rescue => ex
-  puts(ex.message)
-end
+# rescue => ex
+#   puts(ex.message)
+# end
 
   # p "type入ってない================="
   # notype = Pokemon.new(name: "みゅーつーてきなやつ")
