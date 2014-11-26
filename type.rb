@@ -1,5 +1,5 @@
-class Type
-  include ActiveModel::Model
+require './validational_model'
+class Type < ValidationalModel
 
   attr_accessor :name
 
@@ -13,21 +13,6 @@ class Type
 
   # 検証の設定
   validates_inclusion_of :name, in: type_list
-
-  # initializeが呼ばれたら、その後に呼ぶ関数after_initializeを宣言、定義
-  define_model_callbacks :initialize, only: :after
-  after_initialize :validate
-
-  # callback発動するようオーバーライド
-  def initialize(args)
-    run_callbacks(:initialize) { super }
-  end
-
-  def validate
-    if self.invalid?
-      raise "Type format error"
-    end
-  end
 
   def get_skill
     @@type_skill_list["#{@name}"]
