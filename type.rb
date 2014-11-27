@@ -18,7 +18,4 @@ class Type < ValidationalModel
     @@type_skill_list["#{@name}"]
   end
 
-  def attributes
-    { 'name' => @name }
-  end
 end

@@ -5,7 +5,4 @@ class Character < ValidationalModel
 
   validates_presence_of :species, :body
 
-  def attributes
-    { 'species' => @species, 'body' => @body }
-  end
 end

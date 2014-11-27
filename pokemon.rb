@@ -13,7 +13,4 @@ class Pokemon < ValidationalModel
     puts "いけ!#{self.name}、#{self.type.get_skill}!!!"
   end
 
-  def attributes
-    { 'name' => @name, 'type' => @type }
-  end
 end
