@@ -1,6 +1,7 @@
 class ValidationalModel
   include ActiveModel::Model
   include ActiveModel::Serializers::Xml
+  include ActiveModel::Serializers::JSON
   # initializeされたら、その後に呼ぶ関数after_initailizeを宣言、定義
   define_model_callbacks :initialize, only: :after
   after_initialize :validate

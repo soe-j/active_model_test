@@ -17,6 +17,7 @@ I18n.enforce_available_locales = false
   p "characterつくっちゃう================"
   chara = Character.new(species: "ポケモン", body: pipi)
   puts chara.to_xml
+  puts chara.to_json
 
 
   # p "nameもtype(クラスのnameがおかしい)も入ってる================"
