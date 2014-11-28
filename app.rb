@@ -8,17 +8,19 @@ require './character'
 I18n.enforce_available_locales = false
 
 # begin
-  p "nameもtype(クラス)も入ってる================"
+  # p "nameもtype(クラス)も入ってる================"
   pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ノーマル"))
-  puts "名前は#{pipi.name}、#{pipi.type.name}ポケモンじゃ"
-  pipi.attack
-  puts pipi.to_xml
+  # puts "名前は#{pipi.name}、#{pipi.type.name}ポケモンじゃ"
+  # pipi.attack
+  # puts pipi.to_xml
 
   p "characterつくっちゃう================"
   chara = Character.new(species: "ポケモン", body: pipi)
   puts chara.to_xml
   puts chara.to_json
 
+  # a =  { x: { a: 1, b: 2 }, y: { c: 3, d: 4, z: { e: 5, f: 6 } } }
+  # puts a.to_xml
 
   # p "nameもtype(クラスのnameがおかしい)も入ってる================"
   # pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ののの"))
