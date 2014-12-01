@@ -14,4 +14,17 @@ class ValidationalModel
       raise "#{self.class} format error"
     end
   end
+
+  # 必要ならto_hash
+  def to_hash
+    hash = {}
+    # instance_variables(インスタンス変数一覧)から、active_modelが使うvalidation_contextとerrorsを除くため、後ろ2つ除外
+    instance_variables[0..-3].each do |name|
+      key = name.to_s.tr("@", "")
+      value = instance_variable_get(name)
+      value = value.to_hash if value.class.superclass == ValidationalModel
+      hash[key] = value
+    end
+    hash
+  end
 end
