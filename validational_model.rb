@@ -52,8 +52,8 @@ class ValidationalModel
       # nameはインスタンス変数のシンボル 例) :@attr
       unless name.to_s == "@xml_attr"
         child = instance_variable_get(name) # 変数の値を取得
-        child_node = Nokogiri::XML::Node.new(child.class.to_s.tr("@",""), self_node)
         if child.class.superclass == ValidationalModel
+          child_node = Nokogiri::XML::Node.new(child.class.to_s.tr("@",""), self_node)
           child.add_xml_node(child_node)
           unless child.xml_attr.blank?
             child.xml_attr.each do |k, v|
