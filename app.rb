@@ -10,8 +10,12 @@ I18n.enforce_available_locales = false
 
 # begin
   p "nameもtype(クラス)も入ってる================"
-  pipi = Pokemon.new(name: Name.new(str: "ピッピ"), type: Type.new(name: Name.new(str: "ノーマル")), xml_attr: {code: "1", status: "OK"} )
-  puts "名前は#{pipi.name.str}、#{pipi.type.name.str}ポケモンじゃ"
+  pipi = Pokemon.new(name: Name.new(str: "ピッピ", xml_attr: {en_str: "pipi"}), type: [Type.new(name: Name.new(str: "ノーマル"), xml_attr: {code: "normal"}), Type.new(name: Name.new(str: "みず"), xml_attr: {code: "water"})], xml_attr: {code: "1", status: "OK"} )
+  str = ""
+  pipi.type.each do |type|
+    str << type.name.str
+  end
+  puts "名前は#{pipi.name.str}、#{str}ポケモンじゃ"
   pipi.attack
 
   p "characterつくっちゃう================"

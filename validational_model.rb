@@ -22,12 +22,19 @@ class ValidationalModel
   # 必要ならto_hashはこちら
   def to_hash
     hash = {}
-    p instance_variables
     # インスタンス変数のリストの後ろ2つ(activemodel由来の変数)を覗いて取得
     instance_variables[0..-3].each do |name|
       key = name.to_s.tr("@", "")
       value = instance_variable_get(name)
-      value = value.to_hash if value.class.superclass == ValidationalModel
+      if value.class.superclass == ValidationalModel
+        value = value.to_hash
+      elsif value.class == Array && ValidationalModel
+        val = []
+        value.each do |v|
+          val << v.to_hash
+        end
+        value = val
+      end
       hash[key] = value
     end
     hash
@@ -42,25 +49,51 @@ class ValidationalModel
         self_node[key.to_s] = value
       end
     end
-    self.add_xml_node(self_node)
+    self.to_xml_node(self_node)
     xml
   end
 
-  def add_xml_node(self_node)
+  def to_xml_node(self_node)
     # インスタンス変数のリストの後ろ2つ(activemodel由来の変数)を覗いて取得
     instance_variables[0..-3].each do |name|
       # nameはインスタンス変数のシンボル 例) :@attr
       unless name.to_s == "@xml_attr"
-        child = instance_variable_get(name) # 変数の値を取得
+        child = instance_variable_get(name) # インスタンス変数の値を取得
+
+        # インスタンス変数がValidationalModel系だったら、ノードを作って、その中に入れるノードを作ってもらう
         if child.class.superclass == ValidationalModel
           child_node = Nokogiri::XML::Node.new(child.class.to_s.tr("@",""), self_node)
-          child.add_xml_node(child_node)
+          child.to_xml_node(child_node)
+
+          # xml_attrがあったらノードに属性追加
           unless child.xml_attr.blank?
             child.xml_attr.each do |k, v|
               child_node[k.to_s] = v
             end
           end
+
+          # 自ノードに子ノードを追加、終わり
           self_node.add_child(child_node)
+
+        # インスタンス変数がValidationalModel系の配列だったら
+        elsif child.class == Array && child[0].class.superclass == ValidationalModel
+          child.each do |c|
+            child_node = Nokogiri::XML::Node.new(c.class.to_s.tr("@",""), self_node)
+            c.to_xml_node(child_node)
+
+            # xml_attrがあったら属性追加
+            unless c.xml_attr.blank?
+              c.xml_attr.each do |k, v|
+                child_node[k.to_s] = v
+              end
+            end
+
+            # 自ノードに子ノードを追加、終わり
+            self_node.add_child(child_node)
+
+          end
+
+        # インスタンス変数がValidationalModelじゃなかったら、そのままいれる
         else
           self_node.content = child
         end
