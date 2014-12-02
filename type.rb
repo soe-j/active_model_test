@@ -12,9 +12,9 @@ class Type < ValidationalModel
   end
 
   # 検証の設定
-  validates_inclusion_of :name, in: type_list
+  # validates_inclusion_of :name, in: type_list
 
   def get_skill
-    @@type_skill_list["#{@name}"]
+    @@type_skill_list["#{@name.str}"]
   end
 end

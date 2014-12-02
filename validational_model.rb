@@ -35,7 +35,7 @@ class ValidationalModel
 
   def to_xml
     xml = Nokogiri::XML("root", nil, 'utf-8')
-    self_node = Nokogiri::XML::Node.new(self.class.to_s.downcase, xml)
+    self_node = Nokogiri::XML::Node.new(self.class.to_s, xml)
     xml.add_child(self_node)
     unless @xml_attr.blank?
       @xml_attr.each do |key, value|
@@ -51,20 +51,19 @@ class ValidationalModel
     instance_variables[0..-3].each do |name|
       # nameはインスタンス変数のシンボル 例) :@attr
       unless name.to_s == "@xml_attr"
-        child_node = Nokogiri::XML::Node.new(name.to_s.tr("@","").downcase, self_node)
         child = instance_variable_get(name) # 変数の値を取得
+        child_node = Nokogiri::XML::Node.new(child.class.to_s.tr("@",""), self_node)
         if child.class.superclass == ValidationalModel
-          #child_node =
           child.add_xml_node(child_node)
           unless child.xml_attr.blank?
             child.xml_attr.each do |k, v|
               child_node[k.to_s] = v
             end
           end
+          self_node.add_child(child_node)
         else
-          child_node.content = child
+          self_node.content = child
         end
-        self_node.add_child(child_node)
       end
     end
   end

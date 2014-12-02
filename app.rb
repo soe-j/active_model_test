@@ -4,17 +4,18 @@ Bundler.require
 require './character'
 require './pokemon'
 require './type'
+require './name'
 
 I18n.enforce_available_locales = false
 
 # begin
   p "nameもtype(クラス)も入ってる================"
-  pipi = Pokemon.new(name: "pipi", type: Type.new(name: "ノーマル"), xml_attr: {code: "1", status: "OK"} )
-  puts "名前は#{pipi.name}、#{pipi.type.name}ポケモンじゃ"
+  pipi = Pokemon.new(name: Name.new(str: "ピッピ"), type: Type.new(name: Name.new(str: "ノーマル")), xml_attr: {code: "1", status: "OK"} )
+  puts "名前は#{pipi.name.str}、#{pipi.type.name.str}ポケモンじゃ"
   pipi.attack
 
   p "characterつくっちゃう================"
-  chara = Character.new(species: "ポケモン", body: pipi, xml_attr: {createdby: "satoshitajiri"})
+  chara = Character.new(name: Name.new(str: "ポケモン"), body: pipi, xml_attr: {createdby: "satoshitajiri"})
   puts chara.to_hash
   puts chara.to_xml
 
